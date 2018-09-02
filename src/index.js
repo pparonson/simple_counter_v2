@@ -88,8 +88,8 @@ function getTotal(_arr) {
     R.reduce(R.add, 0)
     , R.map(item => {
       return item.calories
-    })
-  )(_arr) // point-free _arr
+    })(_arr)
+  )
 
   // const props = R.map((item) => {
   //   return item.calories
