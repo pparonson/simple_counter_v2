@@ -1,7 +1,5 @@
 const initModel = {
-  id: 1
-  , description: "lunch"
-  , calories: 460
+  count: 0
 }
 
 export default initModel
