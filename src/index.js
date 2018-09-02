@@ -8,7 +8,7 @@ import initModel from "./model"
 import update from "./update"
 import view from "./view"
 
-const {pre, td, th, tr, tbody} = hh(h)
+const {pre, td, th, tr, tbody, thead, table} = hh(h)
 
 const node = document.getElementById("app")
 
@@ -40,13 +40,38 @@ function tableRow(className, _mealRecord) {
   ])
 }
 
+function totalRow(className, _meals) {
+  const total = getTotal(_meals)
+  return tr({className}, [
+    cell(td, "pa2 tr", "TOTAL:")
+    , cell(td, "pa2 tr", total)
+  ])
+}
+
 function tableBody(className, _meals) {
   // rows is an array of table row elements
   const rows = R.map(R.partial(tableRow, ["stripe-dark"]), _meals)
-  return tbody({className}, rows)
+  return tbody({className}, [
+    ...rows
+    , totalRow("stripe-dark", _meals)
+  ])
 }
 
-const _view = tableBody("", MEALS)
+const headerRow = tr({className: ""}, [
+  cell(th, "pa2", "Description")
+  , cell(th, "pa2 tr", "Calories")
+])
+
+const tableHead = thead({className: ""}, headerRow)
+
+function _table(className, _meals) {
+  return table({className}, [
+    tableHead
+    , tableBody("", _meals)
+  ])
+}
+
+const _view = _table("", MEALS)
 
 // console.log(_view.outerHTML);
 // const el = document.createElement("td")
@@ -56,3 +81,18 @@ const _view = tableBody("", MEALS)
 let rootNode = createElement(_view)
 
 node.appendChild(rootNode)
+
+// helper fns
+function getTotal(_arr) {
+  return R.compose(
+    R.reduce(R.add, 0)
+    , R.map(item => {
+      return item.calories
+    })
+  )(_arr) // point-free _arr
+
+  // const props = R.map((item) => {
+  //   return item.calories
+  // }, _arr)
+  // return R.reduce(R.add, 0, props)
+}
