@@ -8,18 +8,24 @@ module.exports = {
     path: path.resolve(__dirname, "dist")
   }
   , mode: "none" // dev, prod
+  // , watch: true
+  // , devServer: {
+  //   contentBase: './'
+  //   , compress: true
+  //   , port: 9000
+  // }
   , module: {
     rules: [
       {
         test: /\.js$/
         , exclude: /node_modules/
-        // , use: {
-        //   loader: "babel-loader"
-        //   , options: {
-        //     presets: ["babel-preset-env"]
-        //     , plugins: [require("babel-plugin-transform-object-rest-spread")]
-        //   }
-        // }
+        , use: {
+          loader: "babel-loader"
+          , options: {
+            presets: ["@babel/preset-env"]
+            , plugins: [require("babel-plugin-transform-object-rest-spread")]
+          }
+        }
       }
     ]
   }

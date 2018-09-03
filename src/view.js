@@ -9,14 +9,14 @@ function countView(className, _model) {
 }
 
 function buttonView(className, _string) {
-  return button({className}, _string)
+  return button({className, onclick: () => console.log(`${_string}: clicked!`)}, _string)
 }
 
 function formView(className, _model) {
   return div({className}, [
-    countView("", _model)
-    , buttonView("", "+")
-    , buttonView("", "-")
+    countView("mv2", _model)
+    , buttonView("pv1 ph2 mr2", "+")
+    , buttonView("pv1 ph2", "-")
   ])
 }
 
