@@ -1,26 +1,36 @@
 const MSGS = {
-  INC: "+"
-  , DEC: "_"
+  INC: "INC"
+  , DEC: "DEC"
 }
 
-export function incMsg(value) {
+export function incCounterMsg() {
   return {
     type: MSGS.INC
-    // literal syntax (ie value: "+")
-    , value
+    , value: "+"
   }
 }
 
-export function decMsg(value) {
+export function decCounterMsg() {
   return {
     type: MSGS.DEC
-    , value
+    , value: "-"
   }
 }
 
 function update(_msg, _model) {
-  if (_msg === "INC_COUNT") {_model.count + 1}
-  if (_msg === "DEC_COUNT") {_model.count - 1}
+  const {count} = _model
+  if (_msg.type === MSGS.INC) {
+    return {
+      ..._model
+      , count: count + 1
+    }
+  }
+  if (_msg.type === MSGS.DEC) {
+    return {
+      ..._model
+      , count: count -1
+    }
+  }
   return _model
 }
 
